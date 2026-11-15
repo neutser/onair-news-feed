@@ -346,7 +346,8 @@
   "name": "Канал 5",
   "site": "https://kanal5.com.mk",
   "feed": "https://kanal5.com.mk/rss.aspx",
-  "lang": "mk"
+  "lang": "mk",
+  "priority": 3
  },
  {
   "name": "Капитал",
@@ -413,7 +414,8 @@
   "name": "Сител",
   "site": "https://sitel.com.mk",
   "feed": "https://sitel.com.mk/rss.xml",
-  "lang": "mk"
+  "lang": "mk",
+  "priority": 3
  },
  {
   "name": "Слободен Печат",
@@ -443,6 +445,32 @@
   "name": "Фокус",
   "site": "https://fokus.mk",
   "feed": "https://fokus.mk/feed/",
+  "lang": "mk"
+ },
+ {
+  "name": "TV21",
+  "site": "https://mk.tv21.tv",
+  "feed": "https://mk.tv21.tv/feed/",
+  "lang": "mk",
+  "priority": 3
+ },
+ {
+  "name": "TV21 Shqip",
+  "site": "https://tv21.tv",
+  "feed": "https://tv21.tv/feed/",
+  "lang": "sq",
+  "priority": 3
+ },
+ {
+  "name": "Алфа ТВ",
+  "site": "https://alfa.mk",
+  "feed": "https://alfa.mk/feed/",
+  "lang": "mk"
+ },
+ {
+  "name": "МРТ",
+  "site": "https://mrt.com.mk",
+  "feed": "https://mrt.com.mk/rss.xml",
   "lang": "mk"
  }
 ]

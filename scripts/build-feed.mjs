@@ -308,7 +308,7 @@ function parseFeed(xml, source) {
       image: imageFromItem(block, source.site || link),
       feedCategories: categories.slice(0, 6),
     });
-    if (items.length >= ITEMS_PER_SOURCE) break;
+    if (items.length >= (source.priority ? ITEMS_PER_SOURCE * 2 : ITEMS_PER_SOURCE)) break;
   }
   return items;
 }
@@ -409,6 +409,17 @@ async function scrapeImage(article, source) {
   return null;
 }
 
+/** Priority outlets get a longer timeout and one retry so a slow moment does not drop them. */
+async function fetchFeed(source) {
+  const timeout = source.priority ? 25000 : FETCH_TIMEOUT_MS;
+  try {
+    return await fetchText(source.feed, { timeout });
+  } catch (error) {
+    if (!source.priority) throw error;
+    return await fetchText(source.feed, { timeout });
+  }
+}
+
 async function buildNews(sources, previous) {
   const now = Date.now();
   const byId = new Map();
@@ -422,7 +433,7 @@ async function buildNews(sources, previous) {
     const stat = { name: source.name, feed: source.feed, ok: false, items: 0, added: 0 };
     stats.push(stat);
     try {
-      const xml = await fetchText(source.feed);
+      const xml = await fetchFeed(source);
       const items = parseFeed(xml, source);
       stat.items = items.length;
       stat.ok = items.length > 0;
@@ -448,6 +459,7 @@ async function buildNews(sources, previous) {
           published_at: new Date(published).toISOString(),
           fetched_at: new Date(now).toISOString(),
         };
+        if (source.priority) article.priority = source.priority;
         byId.set(id, article);
         sourceOf.set(id, source);
         fresh.push(article);
@@ -499,6 +511,8 @@ function parseYouTubeFeed(xml, channel) {
       published_at: new Date(published).toISOString(),
       views,
       news: Boolean(channel.news),
+      kind: channel.kind || (channel.news ? "news" : "creator"),
+      priority: channel.priority || 0,
       lang: detectLanguage(title, "mk"),
     });
     if (videos.length >= VIDEOS_PER_CHANNEL) break;
@@ -574,7 +588,7 @@ async function main() {
   await write("videos.json", { generated_at, count: video.videos.length, videos: video.videos });
   await write("channels.json", {
     generated_at,
-    channels: channels.map((c) => ({ id: c.id, name: c.name, thumbnail: c.thumb || null, news: Boolean(c.news), videos: channelCounts[c.id] || 0 })),
+    channels: channels.map((c) => ({ id: c.id, name: c.name, thumbnail: c.thumb || null, news: Boolean(c.news), kind: c.kind || (c.news ? "news" : "creator"), priority: c.priority || 0, videos: channelCounts[c.id] || 0 })),
   });
   await write("status.json", {
     generated_at,

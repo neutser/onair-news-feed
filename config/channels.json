@@ -33,7 +33,8 @@
   "id": "UCqyOkS9_lPZHB13yfM8b0Zw",
   "name": "Kanal 5 TV",
   "thumb": "https://yt3.ggpht.com/ytc/AIdro_mRY5obU-ouqVhe5EMHwrhEb8GkXGiSnTrYSCkB2GVzvK4=s800-c-k-c0x00ffffff-no-rj",
-  "news": true
+  "news": true,
+  "priority": 3
  },
  {
   "id": "UCY7BNGbC2Wuse9KtFxt5KEQ",
@@ -45,7 +46,8 @@
   "id": "UC9S_l5vmdGRDV3GuhvbF8Mg",
   "name": "Sitel TV",
   "thumb": "https://yt3.ggpht.com/ytc/AIdro_9S_l5vmdGRDV3GuhvbF8Mg=s176-c-k-c0x00ffffff-no-rj",
-  "news": true
+  "news": true,
+  "priority": 3
  },
  {
   "id": "UCJRei7E8Nxp80zhh24Cwmqg",
@@ -57,7 +59,8 @@
   "id": "UCOYLBkApnQ7KzOvaD7WyARg",
   "name": "TV21",
   "thumb": "https://yt3.ggpht.com/_QMgfoPJ1k0P6VpVOnMd_DxbNXipSemnPE_c45rt_bYrUjSgTJGFJSFMfIv3-4hbhE35m4mSKdY=s800-c-k-c0x00ffffff-no-rj",
-  "news": true
+  "news": true,
+  "priority": 3
  },
  {
   "id": "UCc2qfuzAEf2EgyHgtZAx4hg",
@@ -256,5 +259,23 @@
   "name": "Светот на Биби",
   "thumb": "https://yt3.ggpht.com/Wm52NsNl9eMhPUJgKAEHuhEc_OYkRR0bQT7lvadHjSlad4owBVWjtJ0sh3-eG61fpLw6VyGLHQ=s800-c-k-c0x00ffffff-no-rj",
   "news": false
+ },
+ {
+  "id": "UCWIv49Tn2iIBsqQGKMIvC4w",
+  "name": "Радио Лидер",
+  "thumb": null,
+  "news": true
+ },
+ {
+  "id": "UCqbnOxNiZDbsttMFHJv9Ahw",
+  "name": "Канал 77",
+  "thumb": null,
+  "news": true
+ },
+ {
+  "id": "UCCy-ElaW0OgPcGMvOzt04jQ",
+  "name": "TV Shenja",
+  "thumb": null,
+  "news": true
  }
 ]
