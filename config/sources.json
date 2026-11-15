@@ -1,0 +1,448 @@
+[
+ {
+  "name": "+Инфо",
+  "site": "https://plusinfo.mk",
+  "feed": "https://plusinfo.mk/feed/",
+  "lang": "mk"
+ },
+ {
+  "name": "24 Вести",
+  "site": "https://24.mk",
+  "feed": "https://24.mk/rss",
+  "lang": "mk"
+ },
+ {
+  "name": "24info.mk",
+  "site": "https://24info.mk",
+  "feed": "https://24info.mk/feed/",
+  "lang": "mk"
+ },
+ {
+  "name": "360°",
+  "site": "https://360stepeni.mk",
+  "feed": "https://360stepeni.mk/feed/",
+  "lang": "mk"
+ },
+ {
+  "name": "Albeu",
+  "site": "https://albeu.com",
+  "feed": "https://albeu.com/feed/",
+  "lang": "sq"
+ },
+ {
+  "name": "Almakos",
+  "site": "https://almakos.com",
+  "feed": "https://almakos.com/feed/",
+  "lang": "sq"
+ },
+ {
+  "name": "Alsat M",
+  "site": "https://alsat.mk",
+  "feed": "https://alsat.mk/feed/",
+  "lang": "sq"
+ },
+ {
+  "name": "Antikorupcija.mk",
+  "site": "https://antikorupcija.mk",
+  "feed": "https://antikorupcija.mk/feed/",
+  "lang": "mk"
+ },
+ {
+  "name": "Antropol.mk",
+  "site": "https://antropol.mk",
+  "feed": "https://antropol.mk/feed/",
+  "lang": "mk"
+ },
+ {
+  "name": "BIRN Macedonia",
+  "site": "https://prizma.mk",
+  "feed": "https://prizma.birn.eu.com/mk/feed",
+  "lang": "mk"
+ },
+ {
+  "name": "Brif.mk",
+  "site": "https://brif.mk",
+  "feed": "https://brif.mk/feed/",
+  "lang": "mk"
+ },
+ {
+  "name": "Civilmedia.mk",
+  "site": "https://civilmedia.mk",
+  "feed": "https://civilmedia.mk/feed/",
+  "lang": "mk"
+ },
+ {
+  "name": "Daily.mk",
+  "site": "https://daily.mk",
+  "feed": "https://daily.mk/feed/",
+  "lang": "mk"
+ },
+ {
+  "name": "Denar.mk",
+  "site": "https://denar.mk",
+  "feed": "https://denar.mk/feed/",
+  "lang": "mk",
+  "category": "Економија"
+ },
+ {
+  "name": "Denesen.mk",
+  "site": "https://denesen.mk",
+  "feed": "https://denesen.mk/feed/",
+  "lang": "mk"
+ },
+ {
+  "name": "Frontline.mk",
+  "site": "https://frontline.mk",
+  "feed": "https://frontline.mk/feed/",
+  "lang": "mk"
+ },
+ {
+  "name": "INA Online",
+  "site": "https://ina-online.net",
+  "feed": "https://ina-online.net/feed/",
+  "lang": "sq"
+ },
+ {
+  "name": "Inbox7.mk",
+  "site": "https://inbox7.mk",
+  "feed": "https://inbox7.mk/feed/",
+  "lang": "mk"
+ },
+ {
+  "name": "Independent.mk",
+  "site": "https://independent.mk",
+  "feed": "https://independent.mk/feed/",
+  "lang": "mk"
+ },
+ {
+  "name": "IT.mk",
+  "site": "https://it.mk",
+  "feed": "https://it.mk/feed/",
+  "lang": "mk",
+  "category": "Технологија"
+ },
+ {
+  "name": "Koha.mk",
+  "site": "https://koha.mk",
+  "feed": "https://koha.mk/feed/",
+  "lang": "sq"
+ },
+ {
+  "name": "Lajm Press",
+  "site": "https://lajmpress.org",
+  "feed": "https://lajmpress.org/feed/",
+  "lang": "sq"
+ },
+ {
+  "name": "Lajmi.net",
+  "site": "https://lajmi.net",
+  "feed": "https://lajmi.net/feed/",
+  "lang": "sq"
+ },
+ {
+  "name": "Lider.mk",
+  "site": "https://lider.mk",
+  "feed": "https://lider.mk/feed/",
+  "lang": "mk"
+ },
+ {
+  "name": "Lokalno.mk",
+  "site": "https://lokalno.mk",
+  "feed": "https://lokalno.mk/feed/",
+  "lang": "mk"
+ },
+ {
+  "name": "MIA",
+  "site": "https://mia.mk",
+  "feed": "https://mia.mk/feed/",
+  "lang": "mk"
+ },
+ {
+  "name": "NetPress",
+  "site": "https://netpress.com.mk",
+  "feed": "https://netpress.com.mk/feed/",
+  "lang": "mk"
+ },
+ {
+  "name": "Nova TV",
+  "site": "https://novatv.mk",
+  "feed": "https://novatv.mk/feed/",
+  "lang": "mk"
+ },
+ {
+  "name": "Off.net.mk",
+  "site": "https://off.net.mk",
+  "feed": "https://off.net.mk/feed/",
+  "lang": "mk"
+ },
+ {
+  "name": "On.net.mk",
+  "site": "https://on.net.mk",
+  "feed": "https://on.net.mk/feed/",
+  "lang": "mk"
+ },
+ {
+  "name": "Portalb",
+  "site": "https://portalb.mk",
+  "feed": "https://portalb.mk/feed/",
+  "lang": "sq"
+ },
+ {
+  "name": "Press.mk",
+  "site": "https://press.mk",
+  "feed": "https://press.mk/feed/",
+  "lang": "mk"
+ },
+ {
+  "name": "Press24",
+  "site": "https://press24.mk",
+  "feed": "https://press24.mk/feed/",
+  "lang": "mk"
+ },
+ {
+  "name": "Prizma.mk",
+  "site": "https://prizma.mk",
+  "feed": "https://prizma.mk/feed/",
+  "lang": "mk"
+ },
+ {
+  "name": "Radio MOF",
+  "site": "https://www.radiomof.mk",
+  "feed": "https://www.radiomof.mk/feed/",
+  "lang": "mk"
+ },
+ {
+  "name": "Reporter.mk",
+  "site": "https://reporter.mk",
+  "feed": "https://reporter.mk/feed/",
+  "lang": "mk"
+ },
+ {
+  "name": "Republika.eu",
+  "site": "https://republika.eu",
+  "feed": "https://republika.eu/feed/",
+  "lang": "mk"
+ },
+ {
+  "name": "Shenja.al",
+  "site": "https://shenja.al",
+  "feed": "https://shenja.al/feed/",
+  "lang": "sq"
+ },
+ {
+  "name": "Skopje1.mk",
+  "site": "https://skopje1.mk",
+  "feed": "https://skopje1.mk/feed/",
+  "lang": "mk"
+ },
+ {
+  "name": "Skopjeinfo.mk",
+  "site": "https://skopjeinfo.mk",
+  "feed": "https://skopjeinfo.mk/feed/",
+  "lang": "mk"
+ },
+ {
+  "name": "Sloboden Pecat",
+  "site": "https://www.slobodenpecat.mk",
+  "feed": "https://www.slobodenpecat.mk/feed/",
+  "lang": "mk"
+ },
+ {
+  "name": "Sport1.mk",
+  "site": "https://sport1.mk",
+  "feed": "https://sport1.mk/feed/",
+  "lang": "mk",
+  "category": "Спорт"
+ },
+ {
+  "name": "Sportlive.mk",
+  "site": "https://sportlive.mk",
+  "feed": "https://sportlive.mk/feed/",
+  "lang": "mk",
+  "category": "Спорт"
+ },
+ {
+  "name": "Sportski.mk",
+  "site": "https://sportski.mk",
+  "feed": "https://sportski.mk/feed/",
+  "lang": "mk",
+  "category": "Спорт"
+ },
+ {
+  "name": "Standard.mk",
+  "site": "https://standard.mk",
+  "feed": "https://standard.mk/feed/",
+  "lang": "mk"
+ },
+ {
+  "name": "Telegrafi MK",
+  "site": "https://telegrafi.com",
+  "feed": "https://telegrafi.com/feed/",
+  "lang": "sq"
+ },
+ {
+  "name": "Tetova Sot",
+  "site": "https://tetovasot.com",
+  "feed": "https://tetovasot.com/feed/",
+  "lang": "sq"
+ },
+ {
+  "name": "Tribuna.mk",
+  "site": "https://tribuna.mk",
+  "feed": "https://tribuna.mk/feed/",
+  "lang": "mk"
+ },
+ {
+  "name": "А1он",
+  "site": "https://a1on.mk",
+  "feed": "https://a1on.mk/feed/",
+  "lang": "mk"
+ },
+ {
+  "name": "Актуелно",
+  "site": "https://aktuelno.mk",
+  "feed": "https://aktuelno.mk/feed/",
+  "lang": "mk"
+ },
+ {
+  "name": "Битола Њуз",
+  "site": "https://bitolanews.mk",
+  "feed": "https://bitolanews.mk/feed/",
+  "lang": "mk"
+ },
+ {
+  "name": "Вечер",
+  "site": "https://vecer.mk",
+  "feed": "https://vecer.mk/rss",
+  "lang": "mk"
+ },
+ {
+  "name": "Екипа",
+  "site": "https://ekipa.mk",
+  "feed": "https://ekipa.mk/feed/",
+  "lang": "mk",
+  "category": "Спорт"
+ },
+ {
+  "name": "Економски",
+  "site": "https://ekonomski.mk",
+  "feed": "https://ekonomski.mk/feed/",
+  "lang": "mk",
+  "category": "Економија"
+ },
+ {
+  "name": "Жена.мк",
+  "site": "https://zena.mk",
+  "feed": "https://zena.mk/feed/",
+  "lang": "mk"
+ },
+ {
+  "name": "Инфомакс",
+  "site": "https://infomax.mk",
+  "feed": "https://infomax.mk/feed/",
+  "lang": "mk"
+ },
+ {
+  "name": "Канал 5",
+  "site": "https://kanal5.com.mk",
+  "feed": "https://kanal5.com.mk/rss.aspx",
+  "lang": "mk"
+ },
+ {
+  "name": "Капитал",
+  "site": "https://kapital.mk",
+  "feed": "https://kapital.mk/feed/",
+  "lang": "mk",
+  "category": "Економија"
+ },
+ {
+  "name": "Курир",
+  "site": "https://kurir.mk",
+  "feed": "https://kurir.mk/feed/",
+  "lang": "mk"
+ },
+ {
+  "name": "Либертас",
+  "site": "https://libertas.mk",
+  "feed": "https://libertas.mk/feed/",
+  "lang": "mk"
+ },
+ {
+  "name": "Макфакс",
+  "site": "https://makfax.com.mk",
+  "feed": "https://makfax.com.mk/feed/",
+  "lang": "mk"
+ },
+ {
+  "name": "Мета.мк",
+  "site": "https://meta.mk",
+  "feed": "https://meta.mk/feed/",
+  "lang": "mk"
+ },
+ {
+  "name": "МКД.мк",
+  "site": "https://mkd.mk",
+  "feed": "https://mkd.mk/feed/",
+  "lang": "mk"
+ },
+ {
+  "name": "Независен",
+  "site": "https://nezavisen.mk",
+  "feed": "https://nezavisen.mk/feed/",
+  "lang": "mk"
+ },
+ {
+  "name": "Нова Македонија",
+  "site": "https://novamakedonija.com.mk",
+  "feed": "https://novamakedonija.com.mk/feed/",
+  "lang": "mk"
+ },
+ {
+  "name": "Охрид Њуз",
+  "site": "https://ohridnews.com",
+  "feed": "https://ohridnews.com/feed/",
+  "lang": "mk"
+ },
+ {
+  "name": "Република",
+  "site": "https://republika.mk",
+  "feed": "https://republika.mk/feed/",
+  "lang": "mk"
+ },
+ {
+  "name": "Сител",
+  "site": "https://sitel.com.mk",
+  "feed": "https://sitel.com.mk/rss.xml",
+  "lang": "mk"
+ },
+ {
+  "name": "Слободен Печат",
+  "site": "https://slobodenpecat.mk",
+  "feed": "https://slobodenpecat.mk/feed/",
+  "lang": "mk"
+ },
+ {
+  "name": "Телма",
+  "site": "https://telma.mk",
+  "feed": "https://telma.mk/feed/",
+  "lang": "mk"
+ },
+ {
+  "name": "Тетово Инфо",
+  "site": "https://tetovoinfo.mk",
+  "feed": "https://tetovoinfo.mk/feed/",
+  "lang": "mk"
+ },
+ {
+  "name": "Фактор",
+  "site": "https://faktor.mk",
+  "feed": "https://faktor.mk/feed/",
+  "lang": "mk"
+ },
+ {
+  "name": "Фокус",
+  "site": "https://fokus.mk",
+  "feed": "https://fokus.mk/feed/",
+  "lang": "mk"
+ }
+]

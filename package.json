@@ -1,0 +1,7 @@
+{
+  "name": "onair-news-feed",
+  "private": true,
+  "type": "module",
+  "scripts": { "build": "node scripts/build-feed.mjs" },
+  "engines": { "node": ">=20" }
+}
