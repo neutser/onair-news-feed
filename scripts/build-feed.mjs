@@ -36,7 +36,46 @@ async function readJson(file, fallback) {
   }
 }
 
-async function fetchText(url, { timeout = FETCH_TIMEOUT_MS, accept } = {}) {
+const FEED_MAX_BYTES = 3 * 1024 * 1024;
+const PAGE_MAX_BYTES = 512 * 1024;
+
+/** Only plain public http(s) hosts: no IP literals, no localhost, no internal names. */
+function isPublicHttpUrl(value) {
+  let u;
+  try {
+    u = new URL(value);
+  } catch {
+    return false;
+  }
+  if (u.protocol !== "https:" && u.protocol !== "http:") return false;
+  if (u.username || u.password) return false;
+  const host = u.hostname.toLowerCase();
+  if (!host.includes(".") || host.endsWith(".")) return false;
+  if (/^[0-9.]+$/.test(host) || host.includes(":") || host.startsWith("[")) return false;
+  if (/(^|\.)(localhost|local|internal|lan|home|corp|test|invalid|example)$/.test(host)) return false;
+  return true;
+}
+
+const TWO_LEVEL_SUFFIX = /\.(com|org|net|edu|gov|inf)\.[a-z]{2}$|\.(eu|uk|us)\.com$|\.co\.[a-z]{2}$/;
+
+function baseDomain(value) {
+  try {
+    const host = new URL(value).hostname.toLowerCase().replace(/^www\./, "");
+    const labels = host.split(".");
+    return labels.slice(TWO_LEVEL_SUFFIX.test(host) ? -3 : -2).join(".");
+  } catch {
+    return "";
+  }
+}
+
+/** True when `url` belongs to the same site as the configured source. */
+function isSameSite(url, source) {
+  const domain = baseDomain(url);
+  return Boolean(domain) && (domain === baseDomain(source.site || "") || domain === baseDomain(source.feed || ""));
+}
+
+async function fetchText(url, { timeout = FETCH_TIMEOUT_MS, accept, maxBytes = FEED_MAX_BYTES, allow } = {}) {
+  if (!isPublicHttpUrl(url)) throw new Error("blocked url");
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(), timeout);
   try {
@@ -50,7 +89,23 @@ async function fetchText(url, { timeout = FETCH_TIMEOUT_MS, accept } = {}) {
       },
     });
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
-    return await res.text();
+    // Redirects must stay on a public host (and on the allowed site, when given).
+    if (!isPublicHttpUrl(res.url) || (allow && !allow(res.url))) throw new Error("blocked redirect");
+    if (Number(res.headers.get("content-length") || 0) > maxBytes) throw new Error("response too large");
+    const reader = res.body.getReader();
+    const chunks = [];
+    let size = 0;
+    for (;;) {
+      const { done, value } = await reader.read();
+      if (done) break;
+      size += value.byteLength;
+      chunks.push(value);
+      if (size >= maxBytes) {
+        await reader.cancel();
+        break;
+      }
+    }
+    return new TextDecoder("utf-8").decode(Buffer.concat(chunks).subarray(0, maxBytes));
   } finally {
     clearTimeout(timer);
   }
@@ -98,7 +153,8 @@ function cleanText(html) {
   const decoded = decodeEntities(decodeEntities(stripCdata(html)));
   return decoded
     .replace(/<(script|style)[\s\S]*?<\/\1>/gi, " ")
-    .replace(/<[^>]*>/g, " ")
+    .replace(/<[^>]*>?/g, " ") // also drops an unterminated trailing tag
+    .replace(/[<>]/g, " ") // plain text only: no markup characters survive
     .replace(/\s+/g, " ")
     .trim();
 }
@@ -141,7 +197,7 @@ function normalizeImage(raw, base) {
   } catch {
     return null;
   }
-  if (!/^https?:\/\//i.test(url) || AD_URL.test(url)) return null;
+  if (!/^https?:\/\//i.test(url) || AD_URL.test(url) || !isPublicHttpUrl(url)) return null;
   if (/\.(svg|ico)(\?|$)/i.test(url)) return null;
   return url.replace(/^http:\/\//i, "https://");
 }
@@ -196,10 +252,15 @@ function parseFeed(xml, source) {
         /<link[^>]*href=["']([^"']+)["']/i.exec(block)?.[1] ||
         "";
     } else {
-      link = stripCdata(tag(block, "link")).trim() || stripCdata(tag(block, "guid")).trim();
+      link = stripCdata(tag(block, "link")).trim();
+      if (!link) {
+        const guid = decodeEntities(stripCdata(tag(block, "guid")).trim());
+        if (isHttpUrl(guid) && isSameSite(guid, source)) link = guid;
+      }
     }
     link = decodeEntities(link).trim();
-    if (!title || title.length < 8 || !isHttpUrl(link)) continue;
+    // Items must link to the publisher's own site.
+    if (!title || title.length < 8 || !isHttpUrl(link) || !isPublicHttpUrl(link) || !isSameSite(link, source)) continue;
     const description = tag(block, "description") || tag(block, "summary") || tag(block, "content:encoded") || tag(block, "content");
     const published = parseDate(tag(block, "pubDate") || tag(block, "published") || tag(block, "updated") || tag(block, "dc:date"));
     const categories = [...block.matchAll(/<category(?:\s[^>]*)?>([\s\S]*?)<\/category>/gi)].map((c) => cleanText(c[1])).filter(Boolean);
@@ -282,20 +343,29 @@ function canonicalLink(link) {
 
 // ───────────────────────── news ─────────────────────────
 
-async function scrapeImage(url) {
+const META_IMAGE_PATTERNS = [
+  /<meta[^>]{0,300}?(?:property|name)=["']og:image(?::secure_url)?["'][^>]{0,300}?content=["']([^"']{1,2048})["']/i,
+  /<meta[^>]{0,300}?content=["']([^"']{1,2048})["'][^>]{0,300}?(?:property|name)=["']og:image(?::secure_url)?["']/i,
+  /<meta[^>]{0,300}?(?:property|name)=["']twitter:image(?::src)?["'][^>]{0,300}?content=["']([^"']{1,2048})["']/i,
+  /<meta[^>]{0,300}?content=["']([^"']{1,2048})["'][^>]{0,300}?(?:property|name)=["']twitter:image(?::src)?["']/i,
+  /<link[^>]{0,300}?rel=["']image_src["'][^>]{0,300}?href=["']([^"']{1,2048})["']/i,
+];
+
+async function scrapeImage(article, source) {
+  // Only the publisher's own pages are fetched, including after redirects.
+  if (!isSameSite(article.url, source)) return null;
   try {
-    const html = await fetchText(url, { timeout: 9000, accept: "text/html,application/xhtml+xml" });
-    const head = html.slice(0, 200000);
-    const patterns = [
-      /<meta[^>]+(?:property|name)=["']og:image(?::secure_url)?["'][^>]+content=["']([^"']+)["']/i,
-      /<meta[^>]+content=["']([^"']+)["'][^>]+(?:property|name)=["']og:image(?::secure_url)?["']/i,
-      /<meta[^>]+(?:property|name)=["']twitter:image(?::src)?["'][^>]+content=["']([^"']+)["']/i,
-      /<meta[^>]+content=["']([^"']+)["'][^>]+(?:property|name)=["']twitter:image(?::src)?["']/i,
-      /<link[^>]+rel=["']image_src["'][^>]+href=["']([^"']+)["']/i,
-    ];
-    for (const re of patterns) {
-      const image = normalizeImage(re.exec(head)?.[1], url);
-      if (image && !/logo|default|placeholder|favicon/i.test(image)) return image;
+    const html = await fetchText(article.url, {
+      timeout: 9000,
+      accept: "text/html,application/xhtml+xml",
+      maxBytes: PAGE_MAX_BYTES,
+      allow: (finalUrl) => isSameSite(finalUrl, source),
+    });
+    const end = html.search(/<\/head>/i);
+    const head = html.slice(0, end > 0 ? Math.min(end, 65536) : 65536);
+    for (const re of META_IMAGE_PATTERNS) {
+      const image = normalizeImage(re.exec(head)?.[1], article.url);
+      if (image && isPublicHttpUrl(image) && !/logo|default|placeholder|favicon/i.test(image)) return image;
     }
   } catch {
     /* ignore: article simply stays without image */
@@ -310,6 +380,7 @@ async function buildNews(sources, previous) {
 
   const stats = [];
   const fresh = [];
+  const sourceOf = new Map();
 
   await pool(sources, 10, async (source) => {
     const stat = { name: source.name, feed: source.feed, ok: false, items: 0, added: 0 };
@@ -342,6 +413,7 @@ async function buildNews(sources, previous) {
           fetched_at: new Date(now).toISOString(),
         };
         byId.set(id, article);
+        sourceOf.set(id, source);
         fresh.push(article);
         stat.added++;
       }
@@ -356,7 +428,7 @@ async function buildNews(sources, previous) {
     .sort((a, b) => b.published_at.localeCompare(a.published_at))
     .slice(0, IMAGE_SCRAPES_PER_RUN);
   await pool(needImage, 8, async (article) => {
-    article.image = await scrapeImage(article.url);
+    article.image = await scrapeImage(article, sourceOf.get(article.id));
   });
 
   const cutoff = now - NEWS_KEEP_DAYS * 86400000;
