@@ -197,6 +197,7 @@ function cleanText(html) {
 function snippet(text, max = 200) {
   const clean = cleanText(text)
     .replace(/\s*(The post|Објавата)\b.*$/i, "")
+    .replace(/^.*(Embedded video for|Фото за вовед).*$/i, "") // player/caption boilerplate, not a summary
     .replace(/\s*\[(&hellip;|…|\.\.\.)\]\s*$/, "…")
     .trim();
   if (clean.length <= max) return clean;
