@@ -520,6 +520,25 @@ function parseYouTubeFeed(xml, channel) {
   return videos;
 }
 
+/** YouTube's channel feed is flaky; the uploads-playlist feed serves the same entries. */
+async function fetchChannelFeed(id) {
+  const urls = [
+    `https://www.youtube.com/feeds/videos.xml?channel_id=${id}`,
+    `https://www.youtube.com/feeds/videos.xml?playlist_id=UU${id.slice(2)}`,
+    `https://www.youtube.com/feeds/videos.xml?channel_id=${id}`,
+  ];
+  let lastError;
+  for (const [attempt, url] of urls.entries()) {
+    try {
+      if (attempt) await new Promise((resolve) => setTimeout(resolve, 800 * attempt));
+      return await fetchText(url);
+    } catch (error) {
+      lastError = error;
+    }
+  }
+  throw lastError;
+}
+
 async function buildVideos(channels, previous) {
   const now = Date.now();
   const byId = new Map();
@@ -531,7 +550,7 @@ async function buildVideos(channels, previous) {
     const stat = { name: channel.name, id: channel.id, ok: false, items: 0 };
     stats.push(stat);
     try {
-      const xml = await fetchText(`https://www.youtube.com/feeds/videos.xml?channel_id=${channel.id}`);
+      const xml = await fetchChannelFeed(channel.id);
       const videos = parseYouTubeFeed(xml, channel);
       stat.items = videos.length;
       stat.ok = true;
